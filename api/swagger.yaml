@@ -1,0 +1,241 @@
+swagger: "2.0"
+info:
+  description: "MDT Asset Manager API"
+  version: "1.0.0"
+  title: "MDT Asset Manager backend Service"
+host: "localhost:4000"
+basePath: "/v1"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+tags:
+- name: Status
+  description: "Returns the service status"
+- name: Assets
+  description: "Assets related routes"
+paths:
+  /status:
+    get:
+      tags:
+        - "Status"
+      description: "Gets the status of the service"
+      operationId: "getSystemStatus"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "The server status will be returned"
+          schema:
+            $ref: "#/definitions/server_status_response"
+      x-swagger-router-controller: "Status"
+  /assets:
+    get:
+      tags:
+        - Assets
+      description: "Retrieves the asset listing that matches the passed query arguments"
+      operationId: "getAssets"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/authorization"
+        - $ref: "#/parameters/name"
+        - $ref: "#/parameters/type"
+        - $ref: "#/parameters/sorting"
+        - $ref: "#/parameters/sort_order"
+      security:
+        - jwt: []
+      responses:
+        200:
+          $ref: "#/definitions/asset_response_def"
+        204:
+          description: "No Content. Returned if no assets were found."
+      x-swagger-router-controller: "AssetManager"
+    post:
+      tags:
+        - Assets
+      operationId: createAsset
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/authorization"
+        - $ref: "#/parameters/asset_body_param"
+      security:
+        - jwt: []
+      responses:
+        201:
+          $ref: "#/definitions/asset_response_def"
+      x-swagger-router-controller: "AssetManager"
+  /asset/{asset_id}:
+    parameters:
+      - $ref: "#/parameters/authorization"
+      - $ref: "#/parameters/asset_id"
+    get:
+      x-swagger-router-controller: "AssetManager"
+      operationId: "getAsset"
+      security:
+        - jwt: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          $ref: "#/definitions/asset_response_def"
+      tags:
+        - Assets
+      summary: "Gets an asset record"
+    put:
+      x-swagger-router-controller: "AssetManager"
+      operationId: "updateAsset"
+      security:
+        - jwt: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/asset_body_param"
+      responses:
+        200:
+          $ref: "#/definitions/asset_response_def"
+      tags:
+        - Assets
+      summary: "Updates an asset record"
+    delete:
+      x-swagger-router-controller: "AssetManager"
+      operationId: "deleteAsset"
+      security:
+        - jwt: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          $ref: "#/definitions/asset_response_def"
+      tags:
+        - Assets
+      summary: "deletes an asset"
+parameters:
+  name:
+    name: "name"
+    in: "query"
+    description: "The name of the asset to retrieve"
+    required: false
+    type: "string"
+  type:
+    name: "type"
+    in: "query"
+    description: "The type of the asset to retrieve"
+    required: false
+    type: "string"
+  asset_id:
+    name: asset_id
+    in: path
+    required: true
+    pattern: ^[0-9a-fA-F]{24}$
+    description: "The asset identifier"
+    type: string
+  sorting:
+    name: sort_parameter
+    in: query
+    description: "sorting parameter"
+    type: string
+    default: assetName
+    enum:
+      - assetName
+      - assetType
+  sort_order:
+    name: sort_order
+    in: query
+    description: "sorting order"
+    type: integer
+    default: 1
+    enum:
+      - 1
+      - -1
+  authorization:
+    name: authorization
+    in: header
+    required: true
+    type: string
+    description: "The JWT Token"
+  asset_body_param:
+    name: asset
+    in: body
+    description: "Asset body"
+    schema:
+      $ref: "#/definitions/asset_body_def"
+definitions:
+  mongoose_default_fields:
+    type: object
+    required:
+      - _id
+      - updated_at
+      - created_at
+      - __v
+    properties:
+      _id:
+        type: string
+        pattern: ^[0-9a-fA-F]{24}$
+      updated_at:
+        type: string
+        format: date-time
+      created_at:
+        type: string
+        format: date-time
+      __v:
+        type: integer
+  asset_body_def:
+    required:
+      - assetName
+    properties:
+      assetName:
+        type: "string"
+        description: "the name of the asset"
+      assetType:
+        type: "string"
+        description:  "the type of the asset"
+      description:
+        type: "string"
+        description: "the description of the asset"
+  asset_response_def:
+    allOf:
+    - $ref: "#/definitions/mongoose_default_fields"
+    - $ref: "#/definitions/asset_body_def"
+  server_status_response:
+    type: "object"
+    required:
+      - "up_time"
+    properties:
+      up_time:
+        type: "integer"
+  sorting_def:
+    type: "object"
+    required:
+      - "sort_parameter"
+      - "direction"
+    properties:
+      sort_parameter:
+        type: "string"
+        enum:
+          - assetName
+      direction:
+        type: 'integer'
+        enum:
+          - 1
+          - -1
+securityDefinitions:
+  jwt:
+    type: apiKey
+    name: authorization
+    in: header
