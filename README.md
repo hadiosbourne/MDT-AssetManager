@@ -1,30 +1,28 @@
 # MDT-AssetManager
 The back-end API and services to manage the companies physical assets deployed out to the field.
 
-Each list record can be identified using a unique 12 byte binary BSON type id.
+Each asset record can be identified using a unique 12 byte binary BSON type id.
 
-* `GET /list` allows admin, editor, reader accesslevel get all the list records that exists in the database. 
-  * The route paginates and return 10 lists on a single page of the listing.
-  * Users can filter the records based on the name.
-  * The lists can be ordered ascending and descending
-  * The response is an object with pagination information and array of results
-* `POST /list`  allows admin accesslevel to create a single list record, which can have mutliple or single object inside.
-* `PUT /list/{list_id}`allows admin, editor accesslevels to add list to an existing list array record.
-* `GET /list/{list_id}` allows admin, editor, reader accesslevel to retrieve a single list array.
-* `DELETE /list/{list_id}` allows admin, editor accesslevel to delete a single list array.
+* `GET /assets` allows admin, editor, reader accesslevel get all the asset records that exists in the database. 
+  * Users can filter the records based on the assetName and assetType.
+  * The assets can be ordered ascending and descending
+* `POST /assets`  allows admin accesslevel to create a single asset record, duplicate assets for the same type and name are not allowed.
+* `PUT /asset/{asset_id}` allows admin, editor accesslevels to update an existing asset record.
+* `GET /asset/{asset_id}` allows admin, editor, reader accesslevel to retrieve a single asset record.
+* `DELETE /asset/{asset_id}` allows admin, editor accesslevel to delete a single asset record.
 * `/status` route gives the status of the service and its uptime
 
 
 ## Security
 This service uses JWT security tokens, Use the website https://jwt.io/ to decode or generate a token. The secret you need to use will be defined as `jwt_api_token` in config file(This will differ depending on the environment)
 
-OwlLister expects to receive the generated JWT token from Client (Through whatever authentication service they use) which should use the same jwt_api_token as we have in our config to encrypt the token.
+MDT-AssetManager expects to receive the generated JWT token from Client (Through whatever authentication service they use) which should use the same jwt_api_token as we have in our config to encrypt the token.
 
 example of a JWT payload:
 
 ```json
 {
-  "iss": "wiivv-Etsy",
+  "iss": "MDT-Manager",
   "role": "editor"
 }
 ```
@@ -32,9 +30,9 @@ example of a JWT payload:
 Only required filed on the paylod is the `role`, and valid values are: `admin`, `editor`, `reader`
 JWT examples to be used for testing for each role:
 
-`admin`: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4ifQ.RRVsxXY60o76_XMi06K7Y0UkqwLiMPWJdYAPF0n52E4`
-`editor`: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiZWRpdG9yIn0.cefNgSPr40VvHwYTvnsoKZ8kU819cdiTENeuaGZlMDk`
-`reader`: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoicmVhZGVyIn0.r7ukwCi75kmwBXdH3qEaXo2yz7FpkSS-uer3ZfmpneM`
+`admin`: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4ifQ.d7kGs5jRkxyzyq7JoQOicv-L4ffbHdE8tlyrdS1652s`
+`editor`: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiZWRpdG9yIn0.x6VVkGG1_5yuKpJs6Fw0PXo4MUSqYMDbnrGy2ip708k`
+`reader`: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoicmVhZGVyIn0.tYz76BhdhC1mUtqwu62O5nqQFccjemDlasvuhw3TbCg`
 
 Once our `JWTSecurityHelper` receives the JWT token, it uses the api_key defined in the config to decrypt the token and looks for the `role` property on it, and it will look through the `PermissionRoles` collection to find the list of accesses, and based on that each route will allow the user to use that specific route.
 

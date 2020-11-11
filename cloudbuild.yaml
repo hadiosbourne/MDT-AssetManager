@@ -9,17 +9,17 @@ steps:
   args: [ '-c', 'docker build' ]
   waitFor: ["-"]
 
-# Build etsy
+# Build mdt-assetmanager
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
-  args: [ '-c', 'docker build --build-arg PRIVATE_SSH_KEY="$$PASSWORD" -t etsy .' ]
+  args: [ '-c', 'docker build --build-arg PRIVATE_SSH_KEY="$$PASSWORD" -t mdt-assetmanager .' ]
   secretEnv: ['PASSWORD']
   waitFor: ["-"]
 
 # Run the app and dependencies in the background using docker-compose.
-# We have compose exit with the same code as etsy
+# We have compose exit with the same code as mdt-assetmanager
 - name: 'docker/compose:1.23.2'
-  args: ['up', '--exit-code-from', 'etsy']
+  args: ['up', '--exit-code-from', 'mdt-assetmanager']
   env:
   - 'PROJECT_ID=$PROJECT_ID'
   - 'NODE_ENV=ci'

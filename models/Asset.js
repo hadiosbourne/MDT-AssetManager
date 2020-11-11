@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let ListSchema = new Schema(
+let AssetSchema = new Schema(
   {
     assetName: {
       type: String,
@@ -19,8 +19,8 @@ let ListSchema = new Schema(
   },
   {    
     timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'},
-    collection: 'List'
+    collection: 'Asset'
   }
 );
 
-module.exports = mongoose.model('List', ListSchema);
+module.exports = mongoose.model('Asset', AssetSchema);

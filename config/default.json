@@ -16,6 +16,6 @@
       "useUnifiedTopology": true 
     }
   },
-  "jwt_api_token": "WiivvEtsySecret",
+  "jwt_api_token": "MDTSecret",
   "swagger_ui_config": {}
 }

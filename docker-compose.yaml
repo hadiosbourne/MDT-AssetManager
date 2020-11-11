@@ -1,8 +1,8 @@
 version: '3.3'
 services:
-  etsy:
-    image: etsy
-    container_name: etsy
+  mdt-assetmanager:
+    image: mdt-assetmanager
+    container_name: mdt-assetmanager
     ports:
     - "4000:4000"
     command: 'npm run test'

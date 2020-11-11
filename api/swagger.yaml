@@ -46,6 +46,7 @@ paths:
       parameters:
         - $ref: "#/parameters/authorization"
         - $ref: "#/parameters/name"
+        - $ref: "#/parameters/type"
         - $ref: "#/parameters/sorting"
         - $ref: "#/parameters/sort_order"
       security:
@@ -129,6 +130,12 @@ parameters:
     name: "name"
     in: "query"
     description: "The name of the asset to retrieve"
+    required: false
+    type: "string"
+  type:
+    name: "type"
+    in: "query"
+    description: "The type of the asset to retrieve"
     required: false
     type: "string"
   asset_id:
