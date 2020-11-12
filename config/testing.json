@@ -3,7 +3,7 @@
     "reporter": "spec"
   },  
   "mongo": {
-    "database_host": "mongodb://localhost:27017/MDTassetManagerTesting",
+    "database_host": "mongodb+srv://dev:maf123@cluster0.msw1p.mongodb.net/MDTassetManagerTesting?retryWrites=true&w=majority",
     "options": {
       "config": {
         "autoIndex": false
