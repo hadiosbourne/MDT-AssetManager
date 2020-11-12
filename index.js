@@ -18,7 +18,7 @@ mongoose.Promise = global.Promise;
 const options = {
   swaggerUi: '/swagger.json',
   controllers: './controllers',
-  useStubs: process.env.NODE_ENV === 'development' // Conditionally turn on stubs (mock mode)
+  useStubs: process.env.NODE_ENV === 'development' // Conditionally turn on stubs (mock mode).
 };
 
 mongoose.connect(config.mongo.database_host, config.mongo.options);
