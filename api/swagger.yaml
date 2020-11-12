@@ -73,6 +73,8 @@ paths:
       responses:
         201:
           $ref: "#/definitions/asset_response_def"
+        400:
+          description: "Validation Error, normally because of passing an invalid property"
       x-swagger-router-controller: "AssetManager"
   /asset/{asset_id}:
     parameters:
@@ -111,6 +113,8 @@ paths:
           $ref: "#/definitions/asset_response_def"
         404:
           description: "No Content. Returned if no assets were found."
+        400:
+          description: "Validation Error, normally because of passing an invalid property"
       tags:
         - Assets
       summary: "Updates an asset record"
