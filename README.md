@@ -38,13 +38,13 @@ Once our `JWTSecurityHelper` receives the JWT token, it uses the api_key defined
 
 # Improvments
 
-#### Authorization
+### Authorization
 We doing a simple authorization implementation, we need to use an authorization service with Oauth2 standard to save the user details and based on the role of the user to generate a jwt token to the service, this service should be able to create token and refresh token for longer authorizations
 
-#### Logging
+### Logging
 * Need to add logging support
 
-#### CI Setup
+### CI Setup
 We only have an empty CI file which needs to be replaced with correct config depending on the CI service we use
 
 #### Docker and Compose
@@ -53,12 +53,13 @@ Currently we only have templates in place, which need to be repalced with real s
 #### Error handling
 We are doing a very simple error handling for this implementation, we can create error handling helper middlewares to handle the error in any format that we need and will usually contain some sort of an error code and message.
 
-#### Private Methods
+### Private Methods
 There are some private methods that can be moved into helper, handler folder to be reused, at the moment they are specific to that service, so ther eis a little benefit in moving them now.
 
-#### Test cases
+### Test cases
 Currently there are only success unit test and end point test cases, we need to add more validation tests.
 
+## Answer to additional questions:
 ##### What factors lead you to decide between GraphQL or REST?
 
 Since the service has simple CRUD operations, the complexity of using GraphQL and its types, resolvers and quires are not justified.
