@@ -30,6 +30,7 @@ mongoose.connection.on(
 );
 
 // The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
+// eslint-disable-next-line no-sync
 const spec = fs.readFileSync('./api/swagger.yaml', 'utf8');
 const swaggerDoc = jsyaml.safeLoad(spec);
 
@@ -53,7 +54,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function middleWareFunc(middleware
   // Modifying the middleware swagger security, to cater for jwt verification
   securityMetaData.jwt = function validateJWT(req, res, token, next) {
     return JWTSecurityHelper.jwtVerification(req, token, config.jwt_api_token, (err)=>{
-      if(err) {
+      if (err) {
         let jwtValidationError = {
           'Error': true,
           'code': 'validation_error',
@@ -74,16 +75,16 @@ swaggerTools.initializeMiddleware(swaggerDoc, function middleWareFunc(middleware
   // Serve the Swagger documents and Swagger UI
   app.use(middleware.swaggerUi(config.get('swagger_ui_config')));
   app.use(function errorHandler(err, req, res, next) {
-    if(err.code === `SCHEMA_VALIDATION_FAILED`) {
+    if (err.code === 'SCHEMA_VALIDATION_FAILED') {
       let swaggerValidationError = {
         'Error': true,
         'ErrorMessage': err.message + ', ' + err.results.errors[0].message
       };
       res.status(400).json(swaggerValidationError);
-    } else if(err.code === `validation_error`) {
+    } else if (err.code === 'validation_error') {
       let jwtValidationError = {
         'Error': true,
-        'ErrorMessage':err.ErrorMessage
+        'ErrorMessage': err.ErrorMessage
       };
       res.status(err.statusCode).json(jwtValidationError);
     }

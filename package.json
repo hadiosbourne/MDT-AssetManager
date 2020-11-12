@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "lint": "./node_modules/.bin/eslint --ignore-path .gitignore . *.js",
     "test": "node_modules/.bin/swagger-tools validate api/swagger.yaml && sleep 2 && ./node_modules/.bin/istanbul cover testfile.js"
   },
   "keywords": [
@@ -17,6 +18,7 @@
     "cached-request": "2.0.1",
     "config": "1.21.0",
     "cors": "^2.8.5",
+    "eslint": "^7.13.0",
     "express": "4.17.1",
     "js-yaml": "^3.14.0",
     "jsonwebtoken": "^8.1.0",

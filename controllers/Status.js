@@ -9,8 +9,16 @@ const StatusService = require('../services/StatusService');
  * @param {IncomingMessage} res - The http response object
  * @param {Function} next - The callback used to pass control to the next action/middleware
  */
-module.exports.getSystemStatus = function getSystemStatus(req, res, next) {
+module.exports.getSystemStatus =  async (req, res, next) => {
   let statusService = new StatusService();
-  statusService.getSystemStatus(req, res, next);
+  try {
+    const result = await statusService.getSystemStatus();
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(result));
+  } catch (error) {
+    res.status(error.code).json(error.message);
+    return next();
+  }
 };
 

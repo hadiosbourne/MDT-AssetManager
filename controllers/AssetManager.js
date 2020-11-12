@@ -19,7 +19,7 @@ module.exports.createAsset = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(result));
   } catch (error) {
-    if(error.code === 11000) {
+    if (error.code === 11000) {
       res.status(400).json(`Duplicates Error, and existing record with the name [${asset.assetName}] and type [${asset.assetType}] already exists`);
     } else {
       res.status(error.code).json(error.message);
@@ -69,7 +69,7 @@ module.exports.updateAsset = async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(result));
   } catch (error) {
-    if(error.code === 11000) {
+    if (error.code === 11000) {
       res.status(400).json(`Duplicates Error, and existing record with the name [${asset.assetName}] and type [${asset.assetType}] already exists`);
     } else {
       res.status(error.code).json(error.message);
