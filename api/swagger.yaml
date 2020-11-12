@@ -3,7 +3,7 @@ info:
   description: "MDT Asset Manager API"
   version: "1.0.0"
   title: "MDT Asset Manager backend Service"
-host: "localhost:4000"
+host: "https://mdt-asset-manager.azurewebsites.net"
 basePath: "/v1"
 schemes:
 - "http"
