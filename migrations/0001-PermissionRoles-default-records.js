@@ -1,12 +1,12 @@
 
 'use strict';
 
-const Bluebird = require('bluebird')
-const mongodb = require('mongodb')
-const MongoClient = mongodb.MongoClient
+const Bluebird = require('bluebird');
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
 const config = require('config');
 const url = config.mongo['database_host'];
-Bluebird.promisifyAll(MongoClient)
+Bluebird.promisifyAll(MongoClient);
 
 let PermissionRolesDefaultRecords = [
   {
@@ -33,13 +33,13 @@ let PermissionRolesDefaultRecords = [
   }
 ];
 
-module.exports.up = next => {
+module.exports.up = (next) => {
   return MongoClient.connect(url)
-  .then(db => {
-    PermissionRolesDefaultRecords.forEach((result)=>{
-      db.collection('PermissionRoles').insert(result)
+    .then((db) => {
+      PermissionRolesDefaultRecords.forEach((result)=>{
+        db.collection('PermissionRoles').insert(result);
+      });
+      MongoClient.close();
     })
-    MongoClient.close()
-  })
-  .catch(err => next(err))
-}
+    .catch((err) => next(err));
+};

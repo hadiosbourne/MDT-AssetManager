@@ -9,6 +9,5 @@
         "autoIndex": false
       }
     }
-  },
-  "jwt_api_token": "testingSecret"
+  }
 }

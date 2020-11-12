@@ -5,10 +5,7 @@ const {PermissionRoles} = require('../models');
 
 /**
  * This module contains methods that assists with swaggers security
- * and JWT verification.
- *
- * @author hadi.shayesteh <hadishayesteh@gmail.com>
- * @since  29 July 2019
+ * and JWT verification
  *
  * @module SecurityHelper
  */
@@ -20,9 +17,6 @@ module.exports = {
    * @param {object} token - The token passed to the helper
    * @param {object} secret - The secret specified by the api
    * @param {function} next - The next callback with structure function(err)
-   *
-   * @author hadi.shayesteh <hadishayesteh@gmail.com>
-   * @since  29 July 2019
    */
   jwtVerification: function jwtVerification(req, token, secret, next) {
     JWT.verify(token, secret, function validate(err, decoded) {
@@ -46,13 +40,10 @@ module.exports = {
 
 /**
  * checks the permission of the user
- * 
+ *
  * @param {string} httpMethod - The http method on the request
  * @param {string} userRole - The user role retrieved from the api token
  * @param {function} callback - The callback
- *
- * @author Hadi Shayesteh <hadishayesteh@gmail.com>
- * @since  29 July 2019
  *
  * @private
  *
@@ -72,7 +63,7 @@ function _validateAccess(httpMethod, userRole, callback) {
         let runTimeError = 'An error occurred while retrieving permission roles' + err;
         return callback(runTimeError);
       }
-      
+
       if (!_.includes(results[0]['accessLevels'], permissionMapping[httpMethod])) {
         return callback('user does not have access to this route, allowed actions for the user are: ' + results[0]['accessLevels']);
       }

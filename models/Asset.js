@@ -17,7 +17,7 @@ let AssetSchema = new Schema(
       type: String
     }
   },
-  {    
+  {
     timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'},
     collection: 'Asset'
   }

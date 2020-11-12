@@ -5,7 +5,6 @@ const _ = require('lodash');
  * Create an instance of the asset manager Service
  */
 class AssetManagerService {
-
   constructor(assetCollection) {
     this.Asset = assetCollection;
   }
@@ -32,11 +31,11 @@ class AssetManagerService {
     let aggregationArray = [
       {'$sort': {[sortParam]: sortOrder}}
     ];
-    if(!_.isNull(assetName)) {
-      aggregationArray.push({'$match': {assetName}})
+    if (!_.isNull(assetName)) {
+      aggregationArray.push({'$match': {assetName}});
     }
-    if(!_.isNull(assetType)) {
-      aggregationArray.push({'$match': {assetType}})
+    if (!_.isNull(assetType)) {
+      aggregationArray.push({'$match': {assetType}});
     }
     return await this.Asset.aggregate(aggregationArray).exec();
   }
@@ -64,7 +63,7 @@ class AssetManagerService {
    */
   async updateAsset(assetId, asset) {
     const assetRecord = await _findOneAssetRecord({'_id': assetId}, this.Asset);
-    if(_.isEmpty(assetRecord)) {
+    if (_.isEmpty(assetRecord)) {
       return null;
     }
     _.forEach(asset, (value, key) => {
@@ -86,7 +85,7 @@ class AssetManagerService {
     const res = await this.Asset.deleteOne({'_id': assetId});
     return {
       deletedCount: res.deletedCount
-    }
+    };
   }
 }
 
@@ -111,11 +110,12 @@ async function _findOneAssetRecord(query, assetDb) {
  *
  * @param {object} asset - The list object to save
  * @param {MongooseSchema} assetDb - The mongose schema instance to be used to create the schema and save the record
+ *
  * @private
  *
  * @return {object} asset record
  */
 async function _saveAssetRecord(assetrecord, assetDb) {
   const newAsset = new assetDb(assetrecord);
-  return await newAsset.save(); 
+  return await newAsset.save();
 }

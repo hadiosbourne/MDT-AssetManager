@@ -198,6 +198,7 @@ definitions:
   asset_body_def:
     required:
       - assetName
+      - assetType
     properties:
       assetName:
         type: "string"
@@ -219,21 +220,6 @@ definitions:
     properties:
       up_time:
         type: "integer"
-  sorting_def:
-    type: "object"
-    required:
-      - "sort_parameter"
-      - "direction"
-    properties:
-      sort_parameter:
-        type: "string"
-        enum:
-          - assetName
-      direction:
-        type: 'integer'
-        enum:
-          - 1
-          - -1
 securityDefinitions:
   jwt:
     type: apiKey

@@ -8,7 +8,7 @@ let PermissionRolesSchema = new Schema(
     role: {
       type: String,
       required: true
-    },  
+    },
     accessLevels: [{
       type: String,
       required: true
