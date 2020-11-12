@@ -7,8 +7,7 @@ const jsyaml = require('js-yaml');
 const fs = require('fs');
 const config = require('config');
 const _ = require('lodash');
-const serverPort = 'https://mdt-asset-manager.azurewebsites.net';
-
+const serverPort = process.env.PORT ? process.env.PORT : 5000;
 const mongoose = require('mongoose');
 const cors = require('cors');
 const JWTSecurityHelper = require('./helpers/JWTSecurityHelper');
