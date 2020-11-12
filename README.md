@@ -57,4 +57,4 @@ We are doing a very simple error handling for this implementation, we can create
 There are some private methods that can be moved into helper, handler folder to be reused, at the moment they are specific to that service, so ther eis a little benefit in moving them now.
 
 #### Test cases
-Currently there are only success test cases, we need to add more validation tests.
+Currently there are only success unit test and end point test cases, we need to add more validation tests.
