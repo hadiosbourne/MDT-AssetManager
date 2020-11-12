@@ -58,3 +58,29 @@ There are some private methods that can be moved into helper, handler folder to 
 
 #### Test cases
 Currently there are only success unit test and end point test cases, we need to add more validation tests.
+
+##### What factors lead you to decide between GraphQL or REST?
+
+Since the service has simple CRUD operations, the complexity of using GraphQL and its types, resolvers and quires are not justified.
+
+##### Describe how you tested the API and service, how would this be different if the service was hosted in the cloud?
+
+The service has Unit tests and End point tests to validate the funcionalities have been implemented as expected. A Continues Integration step needs to be added for the cloud deploys. 
+
+##### How would you go about securing the API?
+
+A simple oAuth flow with authorization server for validating the user access.
+
+##### What factors would you need to consider to host this API/service in the cloud?
+
+Choice of database and its connection, the required 3rd party services(if/when needed), CI setup, docker setting.
+
+##### Describe the process of how you would deploy this to the cloud.
+
+For the purpose to illustration I Created an app service on azure
+
+Used the azure app service deployment service to connect the app service to github
+
+Setup atrigger on master branch to deploy on each commit.
+
+But in Production environment, We would have Create the dockerfile, build the image And deploy it to kubernetese.
