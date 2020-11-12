@@ -3,7 +3,7 @@
     "port": 4000
   },
   "mongo": {
-    "database_host": "mongodb://localhost:27017/MDTassetManagerDev",
+    "database_host": "mongodb+srv://dev:maf123@cluster0.msw1p.mongodb.net/MDTassetManagerDev?retryWrites=true&w=majority",
     "options": {
       "poolSize": 10,
       "config": {
