@@ -1,6 +1,6 @@
 'use strict';
 const {Asset} = require('../models');
-
+const _ = require('lodash');
 const AssetManagerService = require('../services/AssetManagerService');
 
 /**
@@ -65,8 +65,12 @@ module.exports.updateAsset = async (req, res, next) => {
   const assetId = req.swagger.params.asset_id.value;
   try {
     const result = await assetManagerService.updateAsset(assetId, asset);
-    res.statusCode = 200;
+    const statusCode = _.isEmpty(result) ? 404 : 200;
+    res.statusCode = statusCode;
     res.setHeader('Content-Type', 'application/json');
+    if (_.isNull(result)) {
+      return res.end(JSON.stringify(`No records found matching the id ${assetId}`));
+    }
     res.end(JSON.stringify(result));
   } catch (error) {
     if (error.code === 11000) {
@@ -90,8 +94,12 @@ module.exports.getAsset = async (req, res, next) => {
   const assetId = req.swagger.params.asset_id.value;
   try {
     const result = await assetManagerService.getAsset(assetId);
-    res.statusCode = 200;
+    const statusCode = _.isEmpty(result) ? 404 : 200;
+    res.statusCode = statusCode;
     res.setHeader('Content-Type', 'application/json');
+    if (_.isEmpty(result)) {
+      return res.end(JSON.stringify(`No records found matching the id ${assetId}`));
+    }
     res.end(JSON.stringify(result));
   } catch (error) {
     res.status(error.code).json(error.message);
@@ -111,8 +119,12 @@ module.exports.deleteAsset = async (req, res, next) => {
   const assetId = req.swagger.params.asset_id.value;
   try {
     const result = await assetManagerService.deleteAsset(assetId);
-    res.statusCode = 200;
+    const statusCode = _.isEmpty(result) ? 404 : 200;
+    res.statusCode = statusCode;
     res.setHeader('Content-Type', 'application/json');
+    if (_.isEmpty(result)) {
+      return res.end(JSON.stringify(`No records found matching the id ${assetId}`));
+    }
     res.end(JSON.stringify(result));
   } catch (error) {
     res.status(error.code).json(error.message);

@@ -82,10 +82,7 @@ class AssetManagerService {
    * @return void
    */
   async deleteAsset(assetId) {
-    const res = await this.Asset.deleteOne({'_id': assetId});
-    return {
-      deletedCount: res.deletedCount
-    };
+    return await this.Asset.findByIdAndDelete({'_id': assetId});
   }
 }
 

@@ -17,7 +17,7 @@ describe('AssetManagerService testing scenarios', function test() {
     assetDb = sandbox.createStubInstance(Asset);
     assetSaveStub = sandbox.stub(Asset.prototype, 'save');
     assetFindOneStub = sandbox.stub(Asset, 'findOne');
-    assetDeleteStub = sandbox.stub(Asset, 'deleteOne');
+    assetDeleteStub = sandbox.stub(Asset, 'findByIdAndDelete');
     assetManagerService = new AssetManagerService(Asset);
   });
   afterEach(() => {
@@ -186,9 +186,15 @@ describe('AssetManagerService testing scenarios', function test() {
      */
     it('Testing the successful deletion of an asset record', async function test() {
 
-      let expectedResponse = {deletedCount: 1};
-
-      assetDeleteStub.resolves({deletedCount: 1});
+      let expectedResponse = {
+        '_id': '5fac43c01a6d1c55835258e5',
+        'assetName': 'string',
+        'assetType': 'string',
+        'created_at': '2020-11-11T20:04:16.402Z',
+        'updated_at': '2020-11-11T20:04:16.402Z',
+        '__v': 0
+      };
+      assetDeleteStub.resolves(expectedResponse);
 
       const result = await assetManagerService.deleteAsset(assetId);
       assert.deepEqual(result, expectedResponse, 'Results does not match');

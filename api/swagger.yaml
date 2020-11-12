@@ -90,6 +90,8 @@ paths:
       responses:
         200:
           $ref: "#/definitions/asset_response_def"
+        404:
+          description: "No Content. Returned if no assets were found."
       tags:
         - Assets
       summary: "Gets an asset record"
@@ -107,6 +109,8 @@ paths:
       responses:
         200:
           $ref: "#/definitions/asset_response_def"
+        404:
+          description: "No Content. Returned if no assets were found."
       tags:
         - Assets
       summary: "Updates an asset record"
@@ -122,6 +126,8 @@ paths:
       responses:
         200:
           $ref: "#/definitions/asset_response_def"
+        404:
+          description: "No Content. Returned if no assets were found."
       tags:
         - Assets
       summary: "deletes an asset"
