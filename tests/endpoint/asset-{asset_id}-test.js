@@ -84,13 +84,21 @@ describe('/asset/{asset_id}', function test() {
 
   describe('delete', function test() {
     it('should respond with 200 undefined', function test(done) {
+      const expectedResponse = {
+        '__v': 0,
+        'assetName': 'someName3',
+        'assetType': 'someType3'
+      };
       api.del(`/v1/asset/${assetId}`)
         .set('Content-Type', 'application/json')
         .set('authorization', jwtToken)
         .expect(200)
         .end(function res(err, res) {
           if (err) {return done(err);}
-          res.body.should.deep.equal({deletedCount: 1});
+          delete res.body.updated_at;
+          delete res.body.created_at;
+          delete res.body._id;
+          res.body.should.deep.equal(expectedResponse);
           done();
         });
     });
